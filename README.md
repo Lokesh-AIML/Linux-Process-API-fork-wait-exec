@@ -26,7 +26,38 @@ Test the C Program for the desired output.
 ## C Program to create new process using Linux API system calls fork() and getpid() , getppid() and to print process ID and parent Process ID using Linux API system calls
 
 
+```
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
 
+int main() {
+    pid_t pid;
+
+    // Create a new process using fork()
+    pid = fork();
+
+    if (pid < 0) {
+        // Error occurred
+        perror("fork failed");
+        return 1;
+    }
+    else if (pid == 0) {
+        // Child process
+        printf("Child Process:\n");
+        printf("Child PID  : %d\n", getpid());
+        printf("Parent PID : %d\n", getppid());
+    }
+    else {
+        // Parent process
+        printf("Parent Process:\n");
+        printf("Parent PID : %d\n", getpid());
+        printf("Parent's Parent PID (PPID): %d\n", getppid());
+    }
+
+    return 0;
+}
+```
 
 
 
@@ -39,7 +70,15 @@ Test the C Program for the desired output.
 
 ##OUTPUT
 
+```
+Parent Process:
+Parent PID : 4521
+Parent's Parent PID (PPID): 1123
 
+Child Process:
+Child PID  : 4522
+Parent PID : 4521
+```
 
 
 
